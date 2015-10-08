@@ -1,0 +1,9 @@
+[package]
+name = "pebble"
+version = "0.1.0"
+authors = ["Christopher James Halse Rogers <raof@ubuntu.com>"]
+
+[dependencies]
+mio = "^0.4.3"
+libc = "*"
+nix = "*"
