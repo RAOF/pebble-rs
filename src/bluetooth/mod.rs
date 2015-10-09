@@ -78,7 +78,7 @@ const BTPROTO_HIDP : isize = 6;
 const BTPROTO_AVDTP : isize = 7;
 
 impl BluetoothSocket {
-    fn new(proto : BluetoothProtocol) -> nix::Result<BluetoothSocket> {
+    pub fn new(proto : BluetoothProtocol) -> nix::Result<BluetoothSocket> {
         let fd = unsafe { libc::socket(AF_BLUETOOTH, libc::SOCK_STREAM, proto as i32) };
 
         if fd < 0 {
@@ -88,7 +88,7 @@ impl BluetoothSocket {
         }
     }
 
-    fn connect(&mut self, addr: &BtAddr) -> nix::Result<()> {
+    pub fn connect(&mut self, addr: &BtAddr) -> nix::Result<()> {
         let full_address : sockaddr_rc = sockaddr_rc { rc_family : AF_BLUETOOTH as u16,
             rc_bdaddr : *addr,
             rc_channel : 0
