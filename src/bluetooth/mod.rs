@@ -141,26 +141,38 @@ impl Write for BluetoothSocket {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::ascii::AsciiExt;
 
     #[test()]
     fn btaddr_from_string() {
-
-        let addr = BtAddr::any();
-        assert_eq!(addr.to_string(), "00:00:00:00:00:00");
-
         match BtAddr::from_string("addr : String") {
-            Some(_) => panic!("Unexpectedly succeeded"),
+            Some(_) => panic!("Somehow managed to parse \"addr : String\" as an address?!"),
             None => ()
         }
 
-        match BtAddr::from_string(&super::BtAddr::any().to_string()) {
-            Some(_) => (),
-            None => panic!("Unexpectedly failed!")
+        match BtAddr::from_string("00:00:00:00:00:00") {
+            Some(addr) => assert_eq!(addr, BtAddr([0u8; 6])),
+            None => panic!("")
         }
     }
 
     #[test()]
+    fn btaddr_to_string() {
+        assert_eq!(BtAddr::any().to_string(), "00:00:00:00:00:00");
+        assert_eq!(BtAddr([1, 2, 3, 4, 5, 6]).to_string(), "06:05:04:03:02:01");
+    }
+
+    #[test()]
+    fn btaddr_roundtrips_to_from_string() {
+        let addr = BtAddr([0, 22, 4, 1, 33, 192]);
+        let addr_string = "00:ff:ee:ee:dd:12";
+
+        assert_eq!(addr, BtAddr::from_string(&addr.to_string()).unwrap());
+        assert!(addr_string.eq_ignore_ascii_case(&BtAddr::from_string(addr_string).unwrap().to_string()));
+    }
+
+    #[test()]
     fn creates_rfcomm_socket() {
-        BluetoothSocket::new(BluetoothProtocol::rfcomm).unwrap();
+        BluetoothSocket::new(BluetoothProtocol::RFCOMM).unwrap();
     }
 }
