@@ -52,7 +52,14 @@ struct sockaddr_rc {
 }
 
 pub enum BluetoothProtocol {
-    rfcomm = BTPROTO_RFCOMM
+    L2CAP = BTPROTO_L2CAP,
+    HCI = BTPROTO_HCI,
+    SCO = BTPROTO_SCO,
+    RFCOMM = BTPROTO_RFCOMM,
+    BNEP = BTPROTO_BNEP,
+    CMTP = BTPROTO_CMTP,
+    HIDP = BTPROTO_HIDP,
+    AVDTP = BTPROTO_AVDTP
 }
 
 pub struct BluetoothSocket {
