@@ -11,7 +11,7 @@ use std::mem;
 use std::os::unix::prelude::AsRawFd;
 
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone, Default)]
+#[derive(Debug, Copy, Clone, Default, PartialEq, Eq)]
 pub struct BtAddr(pub [u8; 6]);
 
 impl BtAddr {
